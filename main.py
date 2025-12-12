@@ -16,8 +16,29 @@ def check_license(data: LicenseCheck):
     if not lic:
         return {"status": "invalid"}
 
-    if lic["machine_id"] != data.machine_id:
-        return {"status": "machine_mismatch"}
+     @app.post("/check")
+ def check_license(data: LicenseCheck):
+     lic = LICENSES.get(data.license_key)
+     if not lic:
+         return {"status": "invalid"}
+
+-    if lic["machine_id"] != data.machine_id:
+-        return {"status": "machine_mismatch"}
++    # 🔒 ilk calisan makinayi kilitle
++    if lic["machine_id"] is None:
++        lic["machine_id"] = data.machine_id
++
++    if lic["machine_id"] != data.machine_id:
++        return {"status": "machine_mismatch"}
+
+     if lic["expires_at"] < datetime.utcnow():
+         return {"status": "expired"}
+
+     return {
+         "status": "ok",
+         "expires_at": lic["expires_at"].isoformat()
+     }
+
 
     if lic["expires_at"] < datetime.utcnow():
         return {"status": "expired"}
