@@ -5,7 +5,16 @@ import sqlite3
 app = FastAPI()
 
 def get_db():
-    return sqlite3.connect("licenses.db")
+    db = sqlite3.connect("licenses.db")
+    cur = db.cursor()
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS licenses (
+            license_key TEXT PRIMARY KEY,
+            expires_at TEXT
+        )
+    """)
+    db.commit()
+    return db
 
 @app.post("/check")
 def check_license(data: dict):
