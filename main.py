@@ -44,3 +44,24 @@ def check_license(data: dict):
         "status": "ok",
         "expires_at": row[0]
     }
+@app.get("/add-test-license")
+def add_test_license():
+    from datetime import timedelta
+
+    key = "TEST-LISANS-123"
+    expires = (datetime.utcnow() + timedelta(days=30)).isoformat()
+
+    db = get_db()
+    cur = db.cursor()
+
+    cur.execute(
+        "INSERT OR REPLACE INTO licenses VALUES (?,?)",
+        (key, expires)
+    )
+    db.commit()
+
+    return {
+        "status": "added",
+        "license_key": key,
+        "expires_at": expires
+    }
