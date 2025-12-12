@@ -4,7 +4,6 @@ from datetime import datetime, timedelta
 
 app = FastAPI()
 
-# RAM’de lisanslar (şimdilik)
 LICENSES = {}
 
 class LicenseCheck(BaseModel):
@@ -18,7 +17,7 @@ def check_license(data: LicenseCheck):
     if not lic:
         return {"status": "invalid"}
 
-    # 🔒 İLK ÇALIŞAN MAKİNEYE KİLİTLE
+    # 🔒 ilk calisan makineye kilitle
     if lic["machine_id"] is None:
         lic["machine_id"] = data.machine_id
 
@@ -34,11 +33,10 @@ def check_license(data: LicenseCheck):
     }
 
 
-# 🔐 SADECE SENİN KULLANACAĞIN ADMIN ENDPOINT
 @app.post("/_admin/add-license")
 def add_license(key: str, days: int = 30):
     LICENSES[key] = {
-        "machine_id": None,  # ⬅️ ilk çalışana otomatik kilitlenecek
+        "machine_id": None,   # ⬅️ otomatik kilit
         "expires_at": datetime.utcnow() + timedelta(days=days)
     }
     return {"status": "added"}
