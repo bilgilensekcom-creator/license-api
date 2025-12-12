@@ -1,0 +1,37 @@
+from fastapi import FastAPI
+from datetime import datetime
+import sqlite3
+
+app = FastAPI()
+
+def get_db():
+    return sqlite3.connect("licenses.db")
+
+@app.post("/check")
+def check_license(data: dict):
+    key = data.get("license_key")
+
+    if not key:
+        return {"status": "error"}
+
+    db = get_db()
+    cur = db.cursor()
+
+    cur.execute(
+        "SELECT expires_at FROM licenses WHERE license_key=?",
+        (key,)
+    )
+    row = cur.fetchone()
+
+    if not row:
+        return {"status": "invalid"}
+
+    expires = datetime.fromisoformat(row[0])
+
+    if expires < datetime.utcnow():
+        return {"status": "expired"}
+
+    return {
+        "status": "ok",
+        "expires_at": row[0]
+    }
