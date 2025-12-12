@@ -44,6 +44,7 @@ def check_license(data: dict):
         "status": "ok",
         "expires_at": row[0]
     }
+
 @app.get("/add-test-license")
 def add_test_license():
     from datetime import timedelta
