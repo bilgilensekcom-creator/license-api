@@ -1,47 +1,44 @@
 from fastapi import FastAPI
 from datetime import datetime
-import sqlite3
+import hmac, hashlib
 
 app = FastAPI()
 
-def get_db():
-    db = sqlite3.connect("licenses.db")
-    cur = db.cursor()
-    cur.execute("""
-        CREATE TABLE IF NOT EXISTS licenses (
-            license_key TEXT PRIMARY KEY,
-            expires_at TEXT
-        )
-    """)
-    db.commit()
-    return db
+SECRET = "SUPER_SECRET_KEY_DEGISTIR"
+
+def sign(data: str) -> str:
+    return hmac.new(
+        SECRET.encode(),
+        data.encode(),
+        hashlib.sha256
+    ).hexdigest()
 
 @app.post("/check")
 def check_license(data: dict):
-    key = data.get("license_key")
+    license_key = data.get("license_key")
+    machine_id = data.get("machine_id")
 
-    if not key:
+    if not license_key or not machine_id:
         return {"status": "error"}
 
-    db = get_db()
-    cur = db.cursor()
-
-    cur.execute(
-        "SELECT expires_at FROM licenses WHERE license_key=?",
-        (key,)
-    )
-    row = cur.fetchone()
-
-    if not row:
+    try:
+        expiry, lic_machine, signature = license_key.split("|")
+    except ValueError:
         return {"status": "invalid"}
 
-    expires = datetime.fromisoformat(row[0])
+    if lic_machine != machine_id:
+        return {"status": "invalid"}
 
-    if expires < datetime.utcnow():
+    base = f"{expiry}|{lic_machine}"
+    expected = sign(base)
+
+    if not hmac.compare_digest(expected, signature):
+        return {"status": "invalid"}
+
+    if datetime.utcnow().date() > datetime.fromisoformat(expiry).date():
         return {"status": "expired"}
 
     return {
         "status": "ok",
-        "expires_at": row[0]
+        "expires_at": expiry
     }
-
