@@ -1,44 +1,36 @@
 from fastapi import FastAPI
-from datetime import datetime
-import hmac, hashlib
+from pydantic import BaseModel
+from datetime import datetime, timedelta
 
 app = FastAPI()
 
-SECRET = "SUPER_SECRET_KEY_DEGISTIR"
+LICENSES = {}
 
-def sign(data: str) -> str:
-    return hmac.new(
-        SECRET.encode(),
-        data.encode(),
-        hashlib.sha256
-    ).hexdigest()
+class LicenseCheck(BaseModel):
+    license_key: str
+    machine_id: str
 
 @app.post("/check")
-def check_license(data: dict):
-    license_key = data.get("license_key")
-    machine_id = data.get("machine_id")
-
-    if not license_key or not machine_id:
-        return {"status": "error"}
-
-    try:
-        expiry, lic_machine, signature = license_key.split("|")
-    except ValueError:
+def check_license(data: LicenseCheck):
+    lic = LICENSES.get(data.license_key)
+    if not lic:
         return {"status": "invalid"}
 
-    if lic_machine != machine_id:
-        return {"status": "invalid"}
+    if lic["machine_id"] != data.machine_id:
+        return {"status": "machine_mismatch"}
 
-    base = f"{expiry}|{lic_machine}"
-    expected = sign(base)
-
-    if not hmac.compare_digest(expected, signature):
-        return {"status": "invalid"}
-
-    if datetime.utcnow().date() > datetime.fromisoformat(expiry).date():
+    if lic["expires_at"] < datetime.utcnow():
         return {"status": "expired"}
 
     return {
         "status": "ok",
-        "expires_at": expiry
+        "expires_at": lic["expires_at"].isoformat()
     }
+
+@app.post("/_admin/add-license")
+def add_license(key: str, machine_id: str, days: int = 30):
+    LICENSES[key] = {
+        "machine_id": machine_id,
+        "expires_at": datetime.utcnow() + timedelta(days=days)
+    }
+    return {"status": "added"}
