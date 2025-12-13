@@ -5,21 +5,24 @@
   <title>Satın Al</title>
   <link rel="stylesheet" href="/static/style.css">
 </head>
+
 <body class="page-buy">
 
+<div class="container buy-container">
 
-<div class="container">
-
-  <section class="hero">
+  <!-- HERO -->
+  <section class="buy-hero">
     <h1>💰 Satın Al</h1>
     <p>Lisans paketini seç, ödemeni yap ve hemen kullanmaya başla.</p>
   </section>
 
+  <!-- CONTENT -->
   <section class="buy-layout">
 
     <!-- LEFT -->
     <div class="buy-left">
       <img src="/static/pricing-banner.png" class="pricing-banner zoomable">
+
       <div class="pricing-sub">30 Gün · 90 Gün · 365 Gün · Sınırsız</div>
 
       <ul class="network-list">
@@ -33,7 +36,9 @@
         <code>0x502430eB5E71428cfFCA997A12D38f625C13C06f</code>
       </div>
 
-      <p class="muted">Ödeme yaptıktan sonra sağ taraftaki formdan bildiriniz.</p>
+      <p class="muted">
+        Ödeme yaptıktan sonra sağdaki formdan bildiriniz.
+      </p>
     </div>
 
     <!-- RIGHT -->
@@ -52,17 +57,22 @@
 
       <textarea id="note" placeholder="Not (isteğe bağlı)"></textarea>
 
-      <button onclick="submitPayment()">Ödeme Bildir</button>
+      <button onclick="submitPayment()" class="buy-btn">
+        Ödeme Bildir
+      </button>
 
       <div id="result" class="result"></div>
 
-      <a href="/static/index.html" class="back-link">← Ana Sayfaya Dön</a>
+      <a href="/static/index.html" class="back-link">
+        ← Ana Sayfaya Dön
+      </a>
     </div>
 
   </section>
 
 </div>
 
+<!-- IMAGE MODAL -->
 <div id="image-modal">
   <img id="modal-img">
 </div>
