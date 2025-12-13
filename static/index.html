@@ -9,55 +9,116 @@
 
 <div class="container">
 
-  <h1>🤖 Discord Akıllı Cevap Botu</h1>
+  <!-- HERO -->
+  <section class="hero">
+    <h1>🤖 Discord Akıllı Cevap Botu</h1>
+    <p>
+      Discord kanallarında mesajlara doğal, insan gibi ve otomatik cevaplar
+      vermenizi sağlayan gelişmiş bir bottur.
+      Tüm ayarlar tek panelden yapılır, kur ve çalıştır mantığıyla kullanılır.
+    </p>
 
-  <p>
-    Discord kanallarında mesajlara doğal, insan gibi ve otomatik
-    cevaplar veren gelişmiş bir bottur.
-    Kurduktan sonra aç ve çalıştır mantığıyla kullanılır.
-  </p>
+    <a href="/static/buy.html">
+      <button class="primary">💰 Satın Al</button>
+    </a>
+  </section>
 
-  <h2>✉️ Mesaj Gönderme Seçenekleri</h2>
-  <ul>
-    <li>Rastgele alıntı ile cevap verme</li>
-    <li>Sadece belirlediğiniz kişinin ID’sine alıntılı cevap verme</li>
-    <li>Alıntı yapmadan direkt kanala mesaj atma</li>
-  </ul>
+  <!-- MESAJ SEÇENEKLERİ -->
+  <section class="block two-col">
+    <div>
+      <img src="/static/img/messages.png" alt="Mesaj Gönderme Seçenekleri">
+    </div>
+    <div>
+      <h2>✉️ Mesaj Gönderme Seçenekleri</h2>
+      <p>Bot, mesajlara farklı şekillerde cevap verebilir. Seçim tamamen size aittir.</p>
+      <ul>
+        <li>Rastgele alıntı ile cevap verme</li>
+        <li>Sadece belirlediğiniz kişinin ID’sine alıntılı cevap verme</li>
+        <li>Alıntı yapmadan direkt kanala mesaj atma</li>
+      </ul>
+      <p>
+        Tüm bu seçenekleri Mesaj Seçimi bölümünden kolayca değiştirebilirsiniz.
+      </p>
+    </div>
+  </section>
 
-  <h2>🧠 3 Farklı Cevap Kaynağı</h2>
+  <!-- CEVAP KAYNAKLARI -->
+  <section class="block two-col reverse">
+    <div>
+      <h2>🧠 3 Farklı Cevap Kaynağı</h2>
 
-  <h3>🔹 Ollama (Ücretsiz)</h3>
-  <p>
-    Bilgisayarınıza Ollama kurarak botu tamamen ücretsiz kullanabilirsiniz.
-  </p>
-  <ul>
-    <li>mistral:7b-instruct</li>
-    <li>qwen2.5:7b-instruct</li>
-    <li>gemma3:4b</li>
-  </ul>
+      <h3>🔹 Ollama (Ücretsiz)</h3>
+      <p>
+        Bilgisayarınıza Ollama kurarak botu tamamen ücretsiz kullanabilirsiniz.
+        Bot, gelen mesajı okur ve mesaja uygun cevap üretir.
+      </p>
+      <ul>
+        <li>mistral:7b-instruct</li>
+        <li>qwen2.5:7b-instruct</li>
+        <li>gemma3:4b</li>
+      </ul>
 
-  <h3>🔹 ChatGPT</h3>
-  <ul>
-    <li>GPT-4o Mini</li>
-    <li>GPT-3.5 Turbo</li>
-    <li>GPT-5 Mini</li>
-  </ul>
+      <h3>🔹 ChatGPT</h3>
+      <p>
+        En güçlü yanıt sistemidir. Doğal, akıllı ve bağlama uygun cevaplar üretir.
+        OpenRouter üzerinden ücretsiz API key ile kullanılabilir.
+      </p>
+      <ul>
+        <li>GPT-4o Mini</li>
+        <li>GPT-3.5 Turbo</li>
+        <li>GPT-5 Mini</li>
+      </ul>
 
-  <h3>🔹 TXT Dosyası</h3>
-  <p>
-    Bot, TXT dosyasındaki cevapları sırayla otomatik gönderir.
-  </p>
+      <h3>🔹 Metin Dosyası (TXT)</h3>
+      <p>
+        TXT dosyasına yazılan cevaplar sırayla ve otomatik şekilde kanala gönderilir.
+      </p>
+    </div>
 
-  <h2>🔐 Lisanslı ve Güvenli</h2>
-  <ul>
-    <li>Lisans anahtarı ile çalışır</li>
-    <li>Her lisans tek cihaza kilitlenir</li>
-    <li>İzinsiz kullanım engellenir</li>
-  </ul>
+    <div>
+      <img src="/static/img/models.png" alt="Ollama ve ChatGPT">
+    </div>
+  </section>
 
-  <a href="/static/buy.html">
-    <button>💰 Satın Al</button>
-  </a>
+  <!-- PANEL VE KONTROL -->
+  <section class="block two-col">
+    <div>
+      <img src="/static/img/panel.png" alt="Discord Bot Paneli">
+    </div>
+    <div>
+      <h2>🎯 Tam Kontrol Sizde</h2>
+      <ul>
+        <li>Kanal ID ile sadece istediğiniz kanalda çalışır</li>
+        <li>Belirli kullanıcıları hedefleyebilirsiniz</li>
+        <li>Min ve Max saniye ayarı ile insan gibi gecikme</li>
+      </ul>
+
+      <h2>🧩 Prompt ile Eğitilebilir</h2>
+      <ul>
+        <li>Cevap tarzı</li>
+        <li>Uzunluk</li>
+        <li>Samimiyet seviyesi</li>
+        <li>Emoji kullanımı</li>
+      </ul>
+
+      <h2>🔐 Lisanslı ve Güvenli</h2>
+      <ul>
+        <li>Tek cihaz lisansı</li>
+        <li>Süreli veya süresiz</li>
+        <li>Kopya kullanım engeli</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SON -->
+  <section class="hero">
+    <h2>⭐ Sonuç</h2>
+    <p>
+      Discord mesajlarına akıllı ve doğal cevaplar veren,
+      esnek, güvenli ve profesyonel bir bottur.
+      Bireysel ve profesyonel kullanım için idealdir.
+    </p>
+  </section>
 
 </div>
 
