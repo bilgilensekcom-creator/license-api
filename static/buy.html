@@ -13,76 +13,82 @@
   <section class="hero">
     <h1>💰 Satın Al</h1>
     <p>
-      Aşağıdaki lisans paketlerinden birini seçerek
-      Discord Akıllı Cevap Botu’nu hemen kullanmaya başlayabilirsiniz.
+      Lisans paketini seç, ödemeni yap ve
+      Discord Akıllı Cevap Botu’nu hemen kullanmaya başla.
     </p>
   </section>
 
-  <!-- LICENSE PACKAGES -->
-  <section class="block" style="text-align:center;">
-    <h2>📦 Lisans Paketleri</h2>
-
-    <!-- PRICING BANNER -->
+  <!-- PRICING -->
+  <section class="block pricing-center">
     <img
-  src="/static/pricing-banner.png"
-  alt="Lisans Paketleri"
-  class="zoomable pricing-banner"
->
-
-    <p style="margin-top: 10px; color:#94a3b8;">
+      src="/static/pricing-banner.png"
+      alt="Lisans Paketleri"
+      class="pricing-banner zoomable"
+    >
+    <p class="pricing-sub">
       30 Gün · 90 Gün · 365 Gün · Sınırsız
     </p>
   </section>
 
-  <!-- PAYMENT INFO -->
-  <section class="block form-container">
+  <!-- MAIN GRID -->
+  <section class="block buy-grid">
 
-    <h2>💳 Ödeme</h2>
+    <!-- LEFT -->
+    <div class="buy-left">
+      <h2>💳 Ödeme Bilgileri</h2>
 
-    <p>Ethereum USDT ERC20</p>
-    <p>Base USDT ERC20</p>
-    <p>BNB USDT BEP20</p>
-    
-    <b>0x502430eB5E71428cfFCA997A12D38f625C13C06f</b>
+      <ul class="network-list">
+        <li>Ethereum USDT (ERC20)</li>
+        <li>Base USDT (ERC20)</li>
+        <li>BNB USDT (BEP20)</li>
+      </ul>
 
-    <p style="margin-top: 10px; color:#94a3b8;">
-      Yukarıdaki adrese Eth/Base/Bnb herhangi bir ağdan Usdt ödemesi yaptıktan sonra aşağıdan bildiriniz.
-    </p>
-  </section>
+      <div class="wallet-box">
+        <span>Cüzdan Adresi</span>
+        <code>0x502430eB5E71428cfFCA997A12D38f625C13C06f</code>
+      </div>
 
-  <!-- PAYMENT FORM -->
-  <section class="block" style="max-width: 600px; margin: auto;">
-    <h2>📨 Ödeme Bildirimi</h2>
+      <p class="muted">
+        Yukarıdaki adrese ödeme yaptıktan sonra
+        sağ taraftaki formdan bildiriniz.
+      </p>
+    </div>
 
-    <input id="email" placeholder="E-posta adresiniz">
-    <input id="txid" placeholder="TxID">
-    
-     <select id="network">
-    <option value="">Gönderim Ağı Seçin</option>
-    <option value="ETH">Ethereum (ERC20)</option>
-    <option value="BNB">BNB Chain (BEP20)</option>
-    <option value="BASE">Base</option>
-  </select>
-    
-    <textarea id="note" placeholder="Not (isteğe bağlı)"></textarea>
+    <!-- RIGHT -->
+    <div class="buy-right">
+      <h2>📨 Ödeme Bildirimi</h2>
 
-    <button onclick="submitPayment()">Ödeme Bildir</button>
+      <input id="email" placeholder="E-posta adresiniz">
+      <input id="txid" placeholder="TxID">
 
-    <p id="result" style="margin-top: 12px;"></p>
+      <select id="network">
+        <option value="">Gönderim Ağı Seçin</option>
+        <option value="ETH">Ethereum (ERC20)</option>
+        <option value="BASE">Base (ERC20)</option>
+        <option value="BNB">BNB Chain (BEP20)</option>
+      </select>
 
-    <br>
-    <a href="/static/index.html">← Ana Sayfaya Dön</a>
+      <textarea id="note" placeholder="Not (isteğe bağlı)"></textarea>
+
+      <button onclick="submitPayment()" class="primary full">
+        Ödeme Bildir
+      </button>
+
+      <p id="result" class="result"></p>
+
+      <a href="/static/index.html" class="back-link">← Ana Sayfaya Dön</a>
+    </div>
+
   </section>
 
 </div>
 
-<!-- IMAGE MODAL (banner için) -->
+<!-- IMAGE MODAL -->
 <div id="image-modal">
   <img id="modal-img">
 </div>
 
 <script>
-  /* Image Zoom */
   const modal = document.getElementById("image-modal");
   const modalImg = document.getElementById("modal-img");
 
@@ -105,7 +111,9 @@
     }
   });
 </script>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="/static/app.js"></script>
+
 </body>
 </html>
