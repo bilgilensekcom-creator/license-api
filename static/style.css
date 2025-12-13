@@ -1,6 +1,4 @@
-/* =========================
-   RESET & BASE
-========================= */
+/* RESET */
 * {
   box-sizing: border-box;
 }
@@ -9,192 +7,72 @@ body {
   margin: 0;
   background: radial-gradient(circle at top, #10172a, #05070f);
   color: #e5e7eb;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-  line-height: 1.6;
+  font-family: system-ui, sans-serif;
 }
 
+/* CONTAINER */
 .container {
-  max-width: 1200px;
+  max-width: 1100px;
   margin: auto;
-  padding: 60px 24px;
+  padding: 30px 24px 60px;
 }
 
-/* =========================
-   HERO
-========================= */
+/* HERO */
 .hero {
   text-align: center;
   margin-bottom: 40px;
 }
 
 .hero h1 {
-  font-size: 42px;
-  margin-bottom: 8px;
+  margin: 0;
+  font-size: 40px;
 }
 
 .hero p {
-  font-size: 18px;
+  margin-top: 8px;
   color: #cbd5f5;
-  max-width: 720px;
-  margin-top: 0;
 }
 
-/* =========================
-   BUTTONS
-========================= */
-button,
-.primary {
-  background: linear-gradient(135deg, #22d3ee, #4ade80);
-  border: none;
-  padding: 14px 32px;
-  font-size: 16px;
-  font-weight: 600;
-  color: #0b0f1a;
-  border-radius: 999px;
-  cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-button:hover,
-.primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(34, 211, 238, 0.35);
-}
-
-.full {
-  width: 100%;
-}
-
-/* =========================
-   TEXT
-========================= */
-p {
-  color: #c7d2fe;
-}
-
-ul {
-  padding-left: 18px;
-}
-
-li {
-  margin-bottom: 6px;
-}
-
-.muted {
-  font-size: 14px;
-  color: #94a3b8;
-}
-
-/* =========================
-   IMAGES
-========================= */
-img {
-  width: 100%;
-  border-radius: 18px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-}
-
-.zoomable {
-  cursor: zoom-in;
-}
-
-/* =========================
-   IMAGE MODAL (FIXED)
-========================= */
-#image-modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(2, 6, 23, 0.85);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease;
-}
-
-#image-modal.active {
-  opacity: 1;
-  pointer-events: all;
-}
-
-#image-modal img {
-  max-width: 90vw;
-  max-height: 90vh;
-  border-radius: 16px;
-  box-shadow: 0 20px 80px rgba(0, 0, 0, 0.8);
-}
-
-/* =========================
-   BUY PAGE LAYOUT
-========================= */
+/* BUY GRID */
 .buy-layout {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
-  gap: 50px;
-  max-width: 1100px;
-  margin: 60px auto;
+  gap: 40px;
+  align-items: start;
 }
 
 /* LEFT */
 .buy-left {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  align-items: center;
 }
 
 .pricing-banner {
-  max-width: 100%;
+  width: 100%;
+  border-radius: 18px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
 }
 
 .pricing-sub {
-  text-align: center;
+  margin-top: 12px;
   font-size: 14px;
   color: #94a3b8;
 }
 
-/* PAYMENT INFO */
-.network-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.network-list li {
-  color: #e5e7eb;
-}
-
-.wallet-box {
-  background: #020617;
-  border: 1px solid #1e293b;
-  border-radius: 14px;
-  padding: 14px;
-}
-
-.wallet-box span {
-  font-size: 12px;
-  color: #94a3b8;
-}
-
-.wallet-box code {
-  display: block;
-  margin-top: 6px;
-  color: #22d3ee;
-  word-break: break-all;
-}
-
 /* RIGHT */
 .buy-right {
-  background: rgba(15, 23, 42, 0.6);
+  background: rgba(15,23,42,.6);
   border: 1px solid #1e293b;
   border-radius: 20px;
-  padding: 30px;
+  padding: 28px;
 }
 
-/* =========================
-   FORMS
-========================= */
+.buy-right h3 {
+  margin-top: 0;
+}
+
+/* FORM */
 input,
 textarea,
 select {
@@ -202,64 +80,33 @@ select {
   background: #0f172a;
   border: 1px solid #1e293b;
   color: #e5e7eb;
-  padding: 14px 16px;
+  padding: 14px;
   border-radius: 12px;
-  font-size: 15px;
-  outline: none;
-  margin-bottom: 16px;
-}
-
-input::placeholder,
-textarea::placeholder {
-  color: #94a3b8;
-}
-
-input:focus,
-textarea:focus,
-select:focus {
-  border-color: #22d3ee;
-  box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.4);
+  margin-bottom: 14px;
 }
 
 textarea {
-  resize: vertical;
   min-height: 90px;
+  resize: vertical;
 }
 
-select {
-  appearance: none;
+button.primary {
+  background: linear-gradient(135deg,#22d3ee,#4ade80);
+  border: none;
+  padding: 14px;
+  border-radius: 999px;
+  font-weight: 600;
   cursor: pointer;
-  background-image:
-    linear-gradient(45deg, transparent 50%, #94a3b8 50%),
-    linear-gradient(135deg, #94a3b8 50%, transparent 50%);
-  background-position:
-    calc(100% - 22px) calc(50% - 3px),
-    calc(100% - 16px) calc(50% - 3px);
-  background-size: 6px 6px, 6px 6px;
-  background-repeat: no-repeat;
+  color: #0b0f1a;
 }
 
-.result {
-  margin-top: 12px;
-  font-size: 14px;
+.full {
+  width: 100%;
 }
 
-.back-link {
-  display: inline-block;
-  margin-top: 14px;
-  color: #60a5fa;
-  text-decoration: none;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
+/* RESPONSIVE */
 @media (max-width: 900px) {
   .buy-layout {
     grid-template-columns: 1fr;
-  }
-
-  .hero h1 {
-    font-size: 34px;
   }
 }
