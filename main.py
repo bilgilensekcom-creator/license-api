@@ -4,8 +4,14 @@ from datetime import datetime, timedelta, timezone
 import psycopg2
 from fastapi import FastAPI, Header, HTTPException, Depends
 from pydantic import BaseModel
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 
+# =========================
+# APP
+# =========================
 app = FastAPI()
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # =========================
 # ENV
@@ -130,6 +136,13 @@ class LicenseCheck(BaseModel):
     machine_id: str
 
 # =========================
+# STATIC HOME
+# =========================
+@app.get("/")
+def home():
+    return FileResponse("static/index.html")
+
+# =========================
 # PUBLIC API
 # =========================
 @app.post("/check")
@@ -231,7 +244,7 @@ def extend_license(key: str, days: int):
         cur.execute(
             """
             update licenses
-            set expires_at = expires_at + interval '%s days'
+            set expires_at = expires_at + (%s * interval '1 day')
             where license_key=%s
             """,
             (days, key),
