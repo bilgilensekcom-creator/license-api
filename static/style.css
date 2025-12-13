@@ -1,3 +1,6 @@
+/* =========================
+   RESET & BASE
+========================= */
 * {
   box-sizing: border-box;
 }
@@ -16,15 +19,17 @@ body {
   padding: 60px 24px;
 }
 
-/* HERO */
+/* =========================
+   HERO
+========================= */
 .hero {
   text-align: center;
-  margin-bottom: 100px;
+  margin-bottom: 80px;
 }
 
 .hero h1 {
   font-size: 42px;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .hero p {
@@ -34,10 +39,11 @@ body {
   margin: auto;
 }
 
-/* BUTTON */
+/* =========================
+   BUTTONS
+========================= */
 button,
 .primary {
-  margin-top: 28px;
   background: linear-gradient(135deg, #22d3ee, #4ade80);
   border: none;
   padding: 14px 32px;
@@ -55,96 +61,57 @@ button:hover,
   box-shadow: 0 10px 30px rgba(34, 211, 238, 0.35);
 }
 
-/* SECTIONS */
-.block {
-  margin-bottom: 100px;
+.full {
+  width: 100%;
 }
 
-.block h2 {
-  font-size: 28px;
-  margin-bottom: 12px;
-}
-
-.block h3 {
-  font-size: 20px;
-  margin-top: 24px;
-  margin-bottom: 8px;
-}
-
-/* GRID */
-.two-col {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  align-items: center;
-}
-
-.two-col.reverse {
-  direction: rtl;
-}
-
-.two-col.reverse > * {
-  direction: ltr;
-}
-
-/* TEXT */
+/* =========================
+   TEXT
+========================= */
 p {
   color: #c7d2fe;
 }
 
 ul {
-  padding-left: 20px;
+  padding-left: 18px;
 }
 
 li {
   margin-bottom: 6px;
 }
 
-/* IMAGES */
+.muted {
+  font-size: 14px;
+  color: #94a3b8;
+}
+
+/* =========================
+   IMAGES
+========================= */
 img {
   width: 100%;
   border-radius: 18px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
 }
 
-/* FOOTER SECTION */
-.hero h2 {
-  font-size: 32px;
-}
-
-/* RESPONSIVE */
-@media (max-width: 900px) {
-  .two-col {
-    grid-template-columns: 1fr;
-  }
-
-  .hero h1 {
-    font-size: 34px;
-  }
-
-  .block {
-    margin-bottom: 70px;
-  }
-}
-
-/* IMAGE ZOOM */
 .zoomable {
   cursor: zoom-in;
-  transition: transform 0.2s ease;
 }
 
-.zoomable:hover {
-  transform: scale(1.02);
-}
-
-/* MODAL */
-#image-modal img {
-  width: auto;
-  height: auto;
-  max-width: 60vw;
-  max-height: 75vh;
-  border-radius: 16px;
-  box-shadow: 0 0 80px rgba(0, 0, 0, 0.8);
+/* =========================
+   IMAGE MODAL (FIXED)
+========================= */
+#image-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
 }
 
 #image-modal.active {
@@ -153,232 +120,15 @@ img {
 }
 
 #image-modal img {
-  max-width: 30%;
-  max-height: 40%;
+  max-width: 90vw;
+  max-height: 90vh;
   border-radius: 16px;
-  box-shadow: 0 0 80px rgba(0, 0, 0, 0.8);
-  animation: zoomIn 0.2s ease;
+  box-shadow: 0 20px 80px rgba(0, 0, 0, 0.8);
 }
 
-@keyframes zoomIn {
-  from {
-    transform: scale(0.95);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-/* BUY PAGE FORM */
-input,
-textarea {
-  width: 100%;
-  background: #0f172a;
-  border: 1px solid #1e293b;
-  color: #e5e7eb;
-  padding: 12px 14px;
-  border-radius: 10px;
-  font-size: 14px;
-  outline: none;
-}
-
-input::placeholder,
-textarea::placeholder {
-  color: #94a3b8;
-}
-
-input:focus,
-textarea:focus {
-  border-color: #22d3ee;
-  box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.4);
-}
-
-textarea {
-  resize: vertical;
-  min-height: 90px;
-}
-
-/* FORM GROUP */
-.block input,
-.block textarea {
-  margin-bottom: 14px;
-}
-
-/* BUY PAGE BUTTON */
-.block button {
-  background: linear-gradient(135deg, #22d3ee, #4ade80);
-  color: #0b0f1a;
-  border: none;
-  padding: 14px 28px;
-  font-weight: 600;
-  border-radius: 999px;
-  cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.block button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(34, 211, 238, 0.35);
-}
-
-/* BUY PAGE LINK */
-.block a {
-  color: #60a5fa;
-  text-decoration: none;
-}
-
-.block a:hover {
-  text-decoration: underline;
-}
-
-/* PRICING BANNER */
-.pricing-banner {
-  display: block;
-  max-width: 520px;
-  width: 80%;
-  margin: 20px auto 10px;
-}
-
-/* FORM CONTAINER */
-.form-container {
-  max-width: 720px;
-  margin: auto;
-}
-
-/* FORM ELEMENTS */
-input,
-textarea,
-select {
-  width: 100%;
-  background: #0f172a;
-  border: 1px solid #1e293b;
-  color: #e5e7eb;
-  padding: 14px 16px;
-  border-radius: 12px;
-  font-size: 15px;
-  outline: none;
-  margin-bottom: 16px;
-}
-
-select {
-  appearance: none;
-  cursor: pointer;
-}
-
-/* SELECT ARROW FIX */
-select {
-  background-image:
-    linear-gradient(45deg, transparent 50%, #94a3b8 50%),
-    linear-gradient(135deg, #94a3b8 50%, transparent 50%);
-  background-position:
-    calc(100% - 22px) calc(50% - 3px),
-    calc(100% - 16px) calc(50% - 3px);
-  background-size: 6px 6px, 6px 6px;
-  background-repeat: no-repeat;
-}
-
-/* FORM TITLES */
-.form-container h2 {
-  margin-bottom: 16px;
-}
-
-/* BUY PAGE LAYOUT */
-.pricing-center {
-  text-align: center;
-}
-
-.pricing-banner {
-  max-width: 760px;
-  margin: 20px auto;
-}
-
-.pricing-sub {
-  color: #94a3b8;
-  font-size: 14px;
-}
-
-/* GRID */
-.buy-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  max-width: 1000px;
-  margin: auto;
-}
-
-.buy-left,
-.buy-right {
-  background: rgba(15, 23, 42, 0.6);
-  border: 1px solid #1e293b;
-  border-radius: 20px;
-  padding: 30px;
-}
-
-/* LEFT */
-.network-list {
-  list-style: none;
-  padding: 0;
-  margin: 16px 0;
-}
-
-.network-list li {
-  margin-bottom: 8px;
-  color: #e5e7eb;
-}
-
-.wallet-box {
-  background: #020617;
-  border: 1px solid #1e293b;
-  border-radius: 14px;
-  padding: 14px;
-  margin: 16px 0;
-}
-
-.wallet-box span {
-  display: block;
-  font-size: 12px;
-  color: #94a3b8;
-  margin-bottom: 6px;
-}
-
-.wallet-box code {
-  color: #22d3ee;
-  word-break: break-all;
-}
-
-.muted {
-  font-size: 14px;
-  color: #94a3b8;
-}
-
-/* RIGHT */
-.full {
-  width: 100%;
-  margin-top: 8px;
-}
-
-.result {
-  margin-top: 12px;
-  font-size: 14px;
-}
-
-.back-link {
-  display: inline-block;
-  margin-top: 14px;
-  color: #60a5fa;
-  text-decoration: none;
-}
-
-/* MOBILE */
-@media (max-width: 900px) {
-  .buy-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* BUY PAGE MAIN LAYOUT */
+/* =========================
+   BUY PAGE LAYOUT
+========================= */
 .buy-layout {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
@@ -396,7 +146,6 @@ select {
 
 .pricing-banner {
   max-width: 100%;
-  border-radius: 18px;
 }
 
 .pricing-sub {
@@ -413,7 +162,6 @@ select {
 }
 
 .network-list li {
-  margin-bottom: 6px;
   color: #e5e7eb;
 }
 
@@ -436,11 +184,6 @@ select {
   word-break: break-all;
 }
 
-.muted {
-  font-size: 14px;
-  color: #94a3b8;
-}
-
 /* RIGHT */
 .buy-right {
   background: rgba(15, 23, 42, 0.6);
@@ -449,10 +192,51 @@ select {
   padding: 30px;
 }
 
-/* FORM */
-.full {
+/* =========================
+   FORMS
+========================= */
+input,
+textarea,
+select {
   width: 100%;
-  margin-top: 8px;
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  color: #e5e7eb;
+  padding: 14px 16px;
+  border-radius: 12px;
+  font-size: 15px;
+  outline: none;
+  margin-bottom: 16px;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #94a3b8;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #22d3ee;
+  box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.4);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+select {
+  appearance: none;
+  cursor: pointer;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #94a3b8 50%),
+    linear-gradient(135deg, #94a3b8 50%, transparent 50%);
+  background-position:
+    calc(100% - 22px) calc(50% - 3px),
+    calc(100% - 16px) calc(50% - 3px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
 }
 
 .result {
@@ -467,9 +251,15 @@ select {
   text-decoration: none;
 }
 
-/* MOBILE */
+/* =========================
+   RESPONSIVE
+========================= */
 @media (max-width: 900px) {
   .buy-layout {
     grid-template-columns: 1fr;
+  }
+
+  .hero h1 {
+    font-size: 34px;
   }
 }
