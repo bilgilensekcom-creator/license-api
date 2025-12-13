@@ -7,11 +7,18 @@ from pydantic import BaseModel
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 
-# =========================
-# APP
-# =========================
 app = FastAPI()
+
+# =========================
+# STATIC SITE
+# =========================
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
+
+@app.get("/")
+def home():
+    return FileResponse("static/index.html")
+
 
 # =========================
 # ENV
@@ -23,6 +30,7 @@ DB_NAME = os.getenv("DB_NAME", "postgres")
 DB_PORT = os.getenv("DB_PORT", "5432")
 
 ADMIN_SECRET = os.getenv("ADMIN_SECRET")
+
 
 # =========================
 # DB
@@ -47,13 +55,14 @@ def ensure_table(conn):
     with conn.cursor() as cur:
         cur.execute(
             """
-            create table if not exists licenses (
-              license_key text primary key,
-              machine_id text,
-              expires_at timestamptz not null
+            CREATE TABLE IF NOT EXISTS licenses (
+              license_key TEXT PRIMARY KEY,
+              machine_id TEXT,
+              expires_at TIMESTAMPTZ NOT NULL
             );
             """
         )
+
 
 # =========================
 # HELPERS
@@ -68,13 +77,12 @@ def get_license(key: str):
 
     with conn.cursor() as cur:
         cur.execute(
-            "select license_key, machine_id, expires_at from licenses where license_key=%s",
+            "SELECT license_key, machine_id, expires_at FROM licenses WHERE license_key=%s",
             (key,),
         )
         row = cur.fetchone()
 
     conn.close()
-
     if not row:
         return None
 
@@ -91,7 +99,7 @@ def bind_machine(key: str, machine_id: str):
 
     with conn.cursor() as cur:
         cur.execute(
-            "update licenses set machine_id=%s where license_key=%s",
+            "UPDATE licenses SET machine_id=%s WHERE license_key=%s",
             (machine_id, key),
         )
 
@@ -107,10 +115,10 @@ def upsert_license(key: str, days: int):
     with conn.cursor() as cur:
         cur.execute(
             """
-            insert into licenses (license_key, machine_id, expires_at)
-            values (%s, null, %s)
-            on conflict (license_key)
-            do update set machine_id=null, expires_at=excluded.expires_at
+            INSERT INTO licenses (license_key, machine_id, expires_at)
+            VALUES (%s, NULL, %s)
+            ON CONFLICT (license_key)
+            DO UPDATE SET machine_id=NULL, expires_at=EXCLUDED.expires_at
             """,
             (key, expires),
         )
@@ -118,15 +126,17 @@ def upsert_license(key: str, days: int):
     conn.close()
     return expires
 
+
 # =========================
 # ADMIN AUTH
 # =========================
 def admin_auth(x_admin_key: str = Header(default=None)):
     if not ADMIN_SECRET:
-        raise HTTPException(status_code=500, detail="ADMIN_SECRET missing on server")
+        raise HTTPException(status_code=500, detail="ADMIN_SECRET missing")
 
     if x_admin_key != ADMIN_SECRET:
         raise HTTPException(status_code=403, detail="Forbidden")
+
 
 # =========================
 # MODELS
@@ -135,12 +145,6 @@ class LicenseCheck(BaseModel):
     license_key: str
     machine_id: str
 
-# =========================
-# STATIC HOME
-# =========================
-@app.get("/")
-def home():
-    return FileResponse("static/index.html")
 
 # =========================
 # PUBLIC API
@@ -162,10 +166,8 @@ def check_license(data: LicenseCheck):
     if lic["expires_at"] < utcnow():
         return {"status": "expired"}
 
-    return {
-        "status": "ok",
-        "expires_at": lic["expires_at"].isoformat(),
-    }
+    return {"status": "ok", "expires_at": lic["expires_at"].isoformat()}
+
 
 # =========================
 # ADMIN API
@@ -189,7 +191,7 @@ def list_licenses():
 
     with conn.cursor() as cur:
         cur.execute(
-            "select license_key, machine_id, expires_at from licenses order by expires_at desc"
+            "SELECT license_key, machine_id, expires_at FROM licenses ORDER BY expires_at DESC"
         )
         rows = cur.fetchall()
 
@@ -203,52 +205,3 @@ def list_licenses():
         }
         for r in rows
     ]
-
-
-@app.post("/_admin/delete", dependencies=[Depends(admin_auth)])
-def delete_license(key: str):
-    conn = get_conn()
-    ensure_table(conn)
-
-    with conn.cursor() as cur:
-        cur.execute("delete from licenses where license_key=%s", (key,))
-
-    conn.close()
-    return {"status": "deleted"}
-
-
-@app.post("/_admin/revoke", dependencies=[Depends(admin_auth)])
-def revoke_license(key: str):
-    conn = get_conn()
-    ensure_table(conn)
-
-    with conn.cursor() as cur:
-        cur.execute(
-            "update licenses set expires_at=now() where license_key=%s",
-            (key,),
-        )
-
-    conn.close()
-    return {"status": "revoked"}
-
-
-@app.post("/_admin/extend", dependencies=[Depends(admin_auth)])
-def extend_license(key: str, days: int):
-    if days <= 0:
-        return {"status": "invalid_days"}
-
-    conn = get_conn()
-    ensure_table(conn)
-
-    with conn.cursor() as cur:
-        cur.execute(
-            """
-            update licenses
-            set expires_at = expires_at + (%s * interval '1 day')
-            where license_key=%s
-            """,
-            (days, key),
-        )
-
-    conn.close()
-    return {"status": "extended", "days": days}
