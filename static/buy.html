@@ -53,6 +53,14 @@
 
     <input id="email" placeholder="E-posta adresiniz">
     <input id="txid" placeholder="TxID">
+    
+     <select id="network">
+    <option value="">Gönderim Ağı Seçin</option>
+    <option value="ETH">Ethereum (ERC20)</option>
+    <option value="BNB">BNB Chain (BEP20)</option>
+    <option value="BASE">Base</option>
+  </select>
+    
     <textarea id="note" placeholder="Not (isteğe bağlı)"></textarea>
 
     <button onclick="submitPayment()">Ödeme Bildir</button>
