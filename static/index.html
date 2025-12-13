@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Discord Akıllı Bot</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<div class="container">
+  <h1>🤖 Discord Akıllı Cevap Botu</h1>
+
+  <p>
+    Mesajlara otomatik, doğal ve akıllı cevaplar veren,
+    ChatGPT, Ollama ve TXT destekli gelişmiş Discord botu.
+  </p>
+
+  <h2>✨ Özellikler</h2>
+  <ul>
+    <li>Rastgele alıntı ile cevap verebilir</li>
+    <li>Belirlediğiniz kişinin ID’sine alıntılı cevap verebilir</li>
+    <li>Alıntı yapmadan kanala mesaj atabilir</li>
+    <li>Mesaj seçiminden tüm cevap türleri ayarlanabilir</li>
+    <li>Ollama, ChatGPT ve TXT cevap kaynakları</li>
+    <li>Min / Max saniye gecikme ayarı</li>
+    <li>Prompt ile tamamen özelleştirilebilir</li>
+  </ul>
+
+  <h2>💰 Ödeme</h2>
+  <p>
+    USDT (TRC20) adresi:<br>
+    <b>BURAYA_CÜZDAN_ADRESİN</b>
+  </p>
+
+  <h2>📨 Ödeme Bildirimi</h2>
+
+  <input id="email" placeholder="E-posta adresiniz">
+  <input id="txid" placeholder="TxID">
+  <textarea id="note" placeholder="Not (isteğe bağlı)"></textarea>
+
+  <button onclick="submitPayment()">Ödeme Bildir</button>
+
+  <p id="result"></p>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
