@@ -138,17 +138,13 @@ img {
 }
 
 /* MODAL */
-#image-modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.85);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease;
-  z-index: 9999;
+#image-modal img {
+  width: auto;
+  height: auto;
+  max-width: 60vw;
+  max-height: 75vh;
+  border-radius: 16px;
+  box-shadow: 0 0 80px rgba(0, 0, 0, 0.8);
 }
 
 #image-modal.active {
