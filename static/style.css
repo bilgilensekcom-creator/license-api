@@ -378,3 +378,98 @@ select {
   }
 }
 
+/* BUY PAGE MAIN LAYOUT */
+.buy-layout {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 50px;
+  max-width: 1100px;
+  margin: 60px auto;
+}
+
+/* LEFT */
+.buy-left {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.pricing-banner {
+  max-width: 100%;
+  border-radius: 18px;
+}
+
+.pricing-sub {
+  text-align: center;
+  font-size: 14px;
+  color: #94a3b8;
+}
+
+/* PAYMENT INFO */
+.network-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.network-list li {
+  margin-bottom: 6px;
+  color: #e5e7eb;
+}
+
+.wallet-box {
+  background: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.wallet-box span {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.wallet-box code {
+  display: block;
+  margin-top: 6px;
+  color: #22d3ee;
+  word-break: break-all;
+}
+
+.muted {
+  font-size: 14px;
+  color: #94a3b8;
+}
+
+/* RIGHT */
+.buy-right {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid #1e293b;
+  border-radius: 20px;
+  padding: 30px;
+}
+
+/* FORM */
+.full {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.result {
+  margin-top: 12px;
+  font-size: 14px;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 14px;
+  color: #60a5fa;
+  text-decoration: none;
+}
+
+/* MOBILE */
+@media (max-width: 900px) {
+  .buy-layout {
+    grid-template-columns: 1fr;
+  }
+}
