@@ -7,9 +7,9 @@ from pydantic import BaseModel
 
 app = FastAPI()
 
-# -------------------------
+# =========================
 # ENV
-# -------------------------
+# =========================
 DB_HOST = os.getenv("DB_HOST")
 DB_USER = os.getenv("DB_USER")
 DB_PASS = os.getenv("DB_PASS")
@@ -19,13 +19,14 @@ DB_PORT = os.getenv("DB_PORT", "5432")
 ADMIN_SECRET = os.getenv("ADMIN_SECRET")
 
 
-# -------------------------
-# DB CONNECT
-# -------------------------
+# =========================
+# DB
+# =========================
 def get_conn():
     if not all([DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT]):
-        raise RuntimeError("Missing DB env vars")
-    return psycopg2.connect(
+        raise HTTPException(status_code=500, detail="DB env vars missing")
+
+    conn = psycopg2.connect(
         host=DB_HOST,
         user=DB_USER,
         password=DB_PASS,
@@ -33,13 +34,11 @@ def get_conn():
         port=DB_PORT,
         sslmode="require",
     )
+    conn.autocommit = True
+    return conn
 
 
-conn = get_conn()
-conn.autocommit = True
-
-
-def ensure_table():
+def ensure_table(conn):
     with conn.cursor() as cur:
         cur.execute(
             """
@@ -52,38 +51,55 @@ def ensure_table():
         )
 
 
-ensure_table()
-
-
-# -------------------------
+# =========================
 # HELPERS
-# -------------------------
+# =========================
 def utcnow():
     return datetime.now(timezone.utc)
 
 
 def get_license(key: str):
+    conn = get_conn()
+    ensure_table(conn)
+
     with conn.cursor() as cur:
         cur.execute(
             "select license_key, machine_id, expires_at from licenses where license_key=%s",
             (key,),
         )
         row = cur.fetchone()
-        if not row:
-            return None
-        return {"license_key": row[0], "machine_id": row[1], "expires_at": row[2]}
+
+    conn.close()
+
+    if not row:
+        return None
+
+    return {
+        "license_key": row[0],
+        "machine_id": row[1],
+        "expires_at": row[2],
+    }
 
 
 def bind_machine(key: str, machine_id: str):
+    conn = get_conn()
+    ensure_table(conn)
+
     with conn.cursor() as cur:
         cur.execute(
             "update licenses set machine_id=%s where license_key=%s",
             (machine_id, key),
         )
 
+    conn.close()
+
 
 def upsert_license(key: str, days: int):
+    conn = get_conn()
+    ensure_table(conn)
+
     expires = utcnow() + timedelta(days=days)
+
     with conn.cursor() as cur:
         cur.execute(
             """
@@ -94,12 +110,14 @@ def upsert_license(key: str, days: int):
             """,
             (key, expires),
         )
+
+    conn.close()
     return expires
 
 
-# -------------------------
+# =========================
 # ADMIN AUTH
-# -------------------------
+# =========================
 def admin_auth(x_admin_key: str = Header(default=None)):
     if not ADMIN_SECRET:
         raise HTTPException(status_code=500, detail="ADMIN_SECRET missing on server")
@@ -107,9 +125,9 @@ def admin_auth(x_admin_key: str = Header(default=None)):
         raise HTTPException(status_code=403, detail="Forbidden")
 
 
-# -------------------------
+# =========================
 # API
-# -------------------------
+# =========================
 class LicenseCheck(BaseModel):
     license_key: str
     machine_id: str
@@ -118,6 +136,7 @@ class LicenseCheck(BaseModel):
 @app.post("/check")
 def check_license(data: LicenseCheck):
     lic = get_license(data.license_key)
+
     if not lic:
         return {"status": "invalid"}
 
@@ -141,6 +160,7 @@ def check_license(data: LicenseCheck):
 def add_license(key: str, days: int = 30):
     if not key or not key.strip():
         return {"status": "invalid_key"}
+
     if days <= 0:
         return {"status": "invalid_days"}
 
