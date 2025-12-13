@@ -237,3 +237,53 @@ textarea {
   text-decoration: underline;
 }
 
+/* PRICING BANNER */
+.pricing-banner {
+  display: block;
+  max-width: 820px;
+  width: 100%;
+  margin: 20px auto 10px;
+}
+
+/* FORM CONTAINER */
+.form-container {
+  max-width: 720px;
+  margin: auto;
+}
+
+/* FORM ELEMENTS */
+input,
+textarea,
+select {
+  width: 100%;
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  color: #e5e7eb;
+  padding: 14px 16px;
+  border-radius: 12px;
+  font-size: 15px;
+  outline: none;
+  margin-bottom: 16px;
+}
+
+select {
+  appearance: none;
+  cursor: pointer;
+}
+
+/* SELECT ARROW FIX */
+select {
+  background-image:
+    linear-gradient(45deg, transparent 50%, #94a3b8 50%),
+    linear-gradient(135deg, #94a3b8 50%, transparent 50%);
+  background-position:
+    calc(100% - 22px) calc(50% - 3px),
+    calc(100% - 16px) calc(50% - 3px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+}
+
+/* FORM TITLES */
+.form-container h2 {
+  margin-bottom: 16px;
+}
