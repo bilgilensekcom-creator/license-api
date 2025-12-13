@@ -26,7 +26,11 @@
   <!-- MESAJ SEÇENEKLERİ -->
   <section class="block two-col">
     <div>
-      <img src="/static/messages.png" alt="Mesaj Gönderme Seçenekleri">
+      <img
+        src="/static/messages.png"
+        alt="Mesaj Gönderme Seçenekleri"
+        class="zoomable"
+      >
     </div>
     <div>
       <h2>✉️ Mesaj Gönderme Seçenekleri</h2>
@@ -76,14 +80,22 @@
     </div>
 
     <div>
-      <img src="/static/models.png" alt="Ollama ve ChatGPT">
+      <img
+        src="/static/models.png"
+        alt="Ollama ve ChatGPT"
+        class="zoomable"
+      >
     </div>
   </section>
 
   <!-- PANEL VE KONTROL -->
   <section class="block two-col">
     <div>
-      <img src="/static/panel.png" alt="Discord Bot Paneli">
+      <img
+        src="/static/panel.png"
+        alt="Discord Bot Paneli"
+        class="zoomable"
+      >
     </div>
     <div>
       <h2>🎯 Tam Kontrol Sizde</h2>
@@ -104,7 +116,7 @@
       <h2>🔐 Lisanslı ve Güvenli</h2>
       <ul>
         <li>Tek cihaz lisansı</li>
-        <li>Süreli veya süresiz</li>
+        <li>Süreli veya süresiz lisans</li>
         <li>Kopya kullanım engeli</li>
       </ul>
     </div>
@@ -121,6 +133,35 @@
   </section>
 
 </div>
+
+<!-- IMAGE MODAL -->
+<div id="image-modal">
+  <img id="modal-img">
+</div>
+
+<script>
+  const modal = document.getElementById("image-modal");
+  const modalImg = document.getElementById("modal-img");
+
+  document.querySelectorAll(".zoomable").forEach(img => {
+    img.addEventListener("click", () => {
+      modal.classList.add("active");
+      modalImg.src = img.src;
+    });
+  });
+
+  modal.addEventListener("click", () => {
+    modal.classList.remove("active");
+    modalImg.src = "";
+  });
+
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape") {
+      modal.classList.remove("active");
+      modalImg.src = "";
+    }
+  });
+</script>
 
 </body>
 </html>
