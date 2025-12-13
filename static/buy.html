@@ -12,31 +12,24 @@
   <!-- HERO -->
   <section class="hero">
     <h1>💰 Satın Al</h1>
-    <p>
-      Lisans paketini seç, ödemeni yap ve
-      Discord Akıllı Cevap Botu’nu hemen kullanmaya başla.
-    </p>
+    <p>Lisans paketini seç, ödemeni yap ve hemen kullanmaya başla.</p>
   </section>
 
-  <!-- PRICING -->
-  <section class="block pricing-center">
-    <img
-      src="/static/pricing-banner.png"
-      alt="Lisans Paketleri"
-      class="pricing-banner zoomable"
-    >
-    <p class="pricing-sub">
-      30 Gün · 90 Gün · 365 Gün · Sınırsız
-    </p>
-  </section>
+  <!-- BUY LAYOUT -->
+  <section class="buy-layout">
 
-  <!-- MAIN GRID -->
-  <section class="block buy-grid">
-
-    <!-- LEFT -->
+    <!-- LEFT COLUMN -->
     <div class="buy-left">
-      <h2>💳 Ödeme Bilgileri</h2>
 
+      <img
+        src="/static/pricing-banner.png"
+        alt="Lisans Paketleri"
+        class="pricing-banner zoomable"
+      >
+
+      <p class="pricing-sub">30 Gün · 90 Gün · 365 Gün · Sınırsız</p>
+
+      <h3>💳 Ödeme Bilgileri</h3>
       <ul class="network-list">
         <li>Ethereum USDT (ERC20)</li>
         <li>Base USDT (ERC20)</li>
@@ -49,14 +42,14 @@
       </div>
 
       <p class="muted">
-        Yukarıdaki adrese ödeme yaptıktan sonra
-        sağ taraftaki formdan bildiriniz.
+        Ödeme yaptıktan sonra sağ taraftaki formdan bildiriniz.
       </p>
+
     </div>
 
-    <!-- RIGHT -->
+    <!-- RIGHT COLUMN -->
     <div class="buy-right">
-      <h2>📨 Ödeme Bildirimi</h2>
+      <h3>📨 Ödeme Bildirimi</h3>
 
       <input id="email" placeholder="E-posta adresiniz">
       <input id="txid" placeholder="TxID">
@@ -82,35 +75,6 @@
   </section>
 
 </div>
-
-<!-- IMAGE MODAL -->
-<div id="image-modal">
-  <img id="modal-img">
-</div>
-
-<script>
-  const modal = document.getElementById("image-modal");
-  const modalImg = document.getElementById("modal-img");
-
-  document.querySelectorAll(".zoomable").forEach(img => {
-    img.addEventListener("click", () => {
-      modal.classList.add("active");
-      modalImg.src = img.src;
-    });
-  });
-
-  modal.addEventListener("click", () => {
-    modal.classList.remove("active");
-    modalImg.src = "";
-  });
-
-  document.addEventListener("keydown", e => {
-    if (e.key === "Escape") {
-      modal.classList.remove("active");
-      modalImg.src = "";
-    }
-  });
-</script>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="/static/app.js"></script>
