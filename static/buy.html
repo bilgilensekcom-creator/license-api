@@ -9,38 +9,55 @@
 
 <div class="container">
 
-  <h1>💰 Satın Al</h1>
+  <section class="hero">
+    <h1>💰 Satın Al</h1>
+    <p>
+      Lisans satın alarak botu hemen kullanmaya başlayabilirsiniz.
+    </p>
+  </section>
 
-  <h2>📦 Lisans Paketi</h2>
-  <p>
-    Discord Akıllı Cevap Botu<br>
-    <b>Tek Lisans – 30 Gün</b>
-  </p>
+  <section class="block">
 
-  <h3>Fiyat: <b>49 USDT</b></h3>
+    <h2>📦 Lisans Paketleri</h2>
 
-  <h2>💳 Ödeme</h2>
-  <p>
-    USDT (TRC20) adresi:
-  </p>
-  <b>BURAYA_CÜZDAN_ADRESİN</b>
+    <!-- BANNER -->
+    <img 
+      src="/static/pricing-banner.png" 
+      alt="Lisans Paketleri"
+      style="margin: 30px 0; width: 100%; max-width: 1000px;"
+    >
 
-  <p>
-    Ödeme yaptıktan sonra aşağıdan bildiriniz.
-  </p>
+  </section>
 
-  <h2>📨 Ödeme Bildirimi</h2>
+  <section class="block">
 
-  <input id="email" placeholder="E-posta adresiniz">
-  <input id="txid" placeholder="TxID">
-  <textarea id="note" placeholder="Not (isteğe bağlı)"></textarea>
+    <h2>💳 Ödeme</h2>
 
-  <button onclick="submitPayment()">Ödeme Bildir</button>
+    <p>USDT (TRC20) adresi:</p>
+    <b>BURAYA_CÜZDAN_ADRESİN</b>
 
-  <p id="result"></p>
+    <p style="margin-top: 10px;">
+      Ödeme yaptıktan sonra aşağıdan bildiriniz.
+    </p>
 
-  <br>
-  <a href="/static/index.html">← Ana Sayfaya Dön</a>
+  </section>
+
+  <section class="block">
+
+    <h2>📨 Ödeme Bildirimi</h2>
+
+    <input id="email" placeholder="E-posta adresiniz">
+    <input id="txid" placeholder="TxID">
+    <textarea id="note" placeholder="Not (isteğe bağlı)"></textarea>
+
+    <button onclick="submitPayment()">Ödeme Bildir</button>
+
+    <p id="result"></p>
+
+    <br>
+    <a href="/static/index.html">← Ana Sayfaya Dön</a>
+
+  </section>
 
 </div>
 
