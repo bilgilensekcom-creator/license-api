@@ -4,27 +4,127 @@
   <meta charset="UTF-8">
   <title>Discord Akıllı Cevap Botu</title>
   <link rel="stylesheet" href="/static/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
 <div class="container">
+
   <h1>🤖 Discord Akıllı Cevap Botu</h1>
 
   <p>
-    Mesajlara otomatik, doğal ve akıllı cevaplar veren,
-    ChatGPT, Ollama ve TXT destekli gelişmiş Discord botu.
+    Bu program, Discord kanallarında mesajlara doğal, insan gibi ve otomatik
+    cevaplar vermenizi sağlar.
+    Tüm ayarlar tek bir panelden yapılır.
+    Kurduktan sonra aç ve çalıştır mantığıyla kullanılır.
   </p>
 
-  <h2>✨ Özellikler</h2>
+  <h2>✉️ Mesaj Gönderme Seçenekleri</h2>
+
+  <p>
+    Bot, mesajlara farklı şekillerde cevap verebilir.
+    Seçim tamamen size aittir:
+  </p>
+
   <ul>
-    <li>Rastgele alıntı ile cevap verebilir</li>
-    <li>Belirlediğiniz kişinin ID’sine alıntılı cevap verebilir</li>
-    <li>Alıntı yapmadan kanala mesaj atabilir</li>
-    <li>Mesaj seçiminden tüm cevap türleri ayarlanabilir</li>
-    <li>Ollama, ChatGPT ve TXT cevap kaynakları</li>
-    <li>Min / Max saniye gecikme ayarı</li>
-    <li>Prompt ile tamamen özelleştirilebilir</li>
+    <li>Rastgele alıntı ile cevap verme</li>
+    <li>Sadece belirlediğiniz kişinin ID’sine alıntılı cevap verme</li>
+    <li>Alıntı yapmadan direkt kanala mesaj atma</li>
+  </ul>
+
+  <p>
+    Tüm bu seçenekleri <b>Mesaj Seçimi</b> bölümünden kolayca değiştirebilirsiniz.
+  </p>
+
+  <h2>🧠 3 Farklı Cevap Kaynağı</h2>
+
+  <h3>🔹 1. Ollama (Ücretsiz, Yerel Yapay Zeka)</h3>
+  <p>
+    İsterseniz bilgisayarınıza Ollama kurarak botu tamamen ücretsiz
+    kullanabilirsiniz.
+    Bot, gelen mesajı okur ve mesaja uygun cevap üretir.
+  </p>
+
+  <p><b>Desteklenen ve önerilen Ollama modelleri:</b></p>
+  <ul>
+    <li>mistral:7b-instruct</li>
+    <li>qwen2.5:7b-instruct</li>
+    <li>gemma3:4b</li>
+  </ul>
+
+  <p>
+    Bu modellerle sınırsız ve ücretsiz cevap üretebilirsiniz.
+  </p>
+
+  <h3>🔹 2. ChatGPT (En Güçlü Yanıt Sistemi)</h3>
+  <p>
+    ChatGPT, en gelişmiş cevap üretme sistemidir.
+    Bot, alıntı yapılacak kişinin mesajını okur ve konuya uygun,
+    doğal ve akıllı cevaplar üretir.
+  </p>
+
+  <p>
+    İsterseniz OpenRouter üzerinden Gmail hesabınızla ücretsiz API key alabilir
+    ve on binlerce ücretsiz cevap yazdırabilirsiniz.
+  </p>
+
+  <p><b>Önerilen ChatGPT modelleri:</b></p>
+  <ul>
+    <li>GPT-4o Mini</li>
+    <li>GPT-3.5 Turbo</li>
+    <li>GPT-5 Mini</li>
+  </ul>
+
+  <h3>🔹 3. Metin Dosyası (TXT)</h3>
+  <p>
+    Botunuzla aynı klasöre bir adet TXT dosyası ekleyebilirsiniz.
+    Dosyanın içine cevap mesajlarınızı yazarsınız.
+  </p>
+
+  <p>Bot bu mesajları:</p>
+  <ul>
+    <li>Sırasıyla</li>
+    <li>Tek tek</li>
+    <li>Otomatik olarak kanala gönderir</li>
+  </ul>
+
+  <p>
+    Basit ama etkili bir yöntemdir.
+  </p>
+
+  <h2>🎯 Kanal ve Kullanıcı Ayarları</h2>
+  <ul>
+    <li>Kanal ID girerek sadece o kanalda çalışmasını sağlayabilirsiniz</li>
+    <li>Sadece belirli kullanıcıların mesajlarına cevap verecek şekilde ayarlanabilir</li>
+  </ul>
+
+  <h2>⏱️ Gerçekçi Zamanlama</h2>
+  <ul>
+    <li>Min ve Max saniye ayarları ile cevap süresini belirlersiniz</li>
+    <li>Anında değil, insan gibi gecikmeli cevap verir</li>
+  </ul>
+
+  <h2>🧩 Prompt ile Eğitilebilir Yapay Zeka</h2>
+  <p>
+    Prompt bölümünü dilediğiniz gibi düzenleyerek:
+  </p>
+  <ul>
+    <li>Cevapların tarzını</li>
+    <li>Uzunluğunu</li>
+    <li>Samimiyet seviyesini</li>
+    <li>Emoji kullanıp kullanmayacağını</li>
+  </ul>
+
+  <p>
+    tamamen kendinize göre ayarlayabilirsiniz.
+    Yapay zekayı adeta kendinize göre eğitirsiniz.
+  </p>
+
+  <h2>🔐 Lisanslı ve Güvenli Kullanım</h2>
+  <ul>
+    <li>Lisans anahtarı ile çalışır</li>
+    <li>Süreli veya süresiz lisans seçenekleri vardır</li>
+    <li>Her lisans tek bir cihaza kilitlenir</li>
+    <li>İzinsiz kopya kullanım engellenir</li>
   </ul>
 
   <h2>💰 Ödeme</h2>
@@ -42,6 +142,15 @@
   <button onclick="submitPayment()">Ödeme Bildir</button>
 
   <p id="result"></p>
+
+  <h2>⭐ Sonuç</h2>
+  <p>
+    Bu bot, Discord mesajlarına akıllı ve doğal cevaplar verir.
+    3 farklı cevap kaynağı ile esnek kullanım sunar.
+    Tamamen özelleştirilebilir, kurulumu kolay ve uzun vadeli güvenli kullanım sağlar.
+    Hem bireysel hem profesyonel kullanım için idealdir.
+  </p>
+
 </div>
 
 <script src="/static/app.js"></script>
