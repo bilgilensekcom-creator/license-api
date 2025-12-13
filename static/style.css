@@ -24,19 +24,19 @@ body {
 ========================= */
 .hero {
   text-align: center;
-  margin-bottom: 80px;
+  margin-bottom: 40px;
 }
 
 .hero h1 {
   font-size: 42px;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .hero p {
   font-size: 18px;
   color: #cbd5f5;
   max-width: 720px;
-  margin: auto;
+  margin-top: 0;
 }
 
 /* =========================
