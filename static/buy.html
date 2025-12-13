@@ -2,52 +2,89 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <title>Satın Al | Discord Akıllı Cevap Botu</title>
+  <title>Satın Al</title>
   <link rel="stylesheet" href="/static/style.css">
 </head>
-
-<body class="buy-page">
+<body>
 
 <div class="container">
 
-  <!-- HERO -->
   <section class="hero">
     <h1>💰 Satın Al</h1>
     <p>Lisans paketini seç, ödemeni yap ve hemen kullanmaya başla.</p>
   </section>
 
-  <!-- BUY GRID -->
   <section class="buy-layout">
 
     <!-- LEFT -->
     <div class="buy-left">
       <img src="/static/pricing-banner.png" class="pricing-banner zoomable">
+      <div class="pricing-sub">30 Gün · 90 Gün · 365 Gün · Sınırsız</div>
 
-      <p class="pricing-sub">30 Gün · 90 Gün · 365 Gün · Sınırsız</p>
+      <ul class="network-list">
+        <li>Ethereum USDT (ERC20)</li>
+        <li>Base USDT (ERC20)</li>
+        <li>BNB USDT (BEP20)</li>
+      </ul>
+
+      <div class="wallet-box">
+        <span>Cüzdan Adresi</span>
+        <code>0x502430eB5E71428cfFCA997A12D38f625C13C06f</code>
+      </div>
+
+      <p class="muted">Ödeme yaptıktan sonra sağ taraftaki formdan bildiriniz.</p>
     </div>
 
     <!-- RIGHT -->
     <div class="buy-right">
       <h3>📨 Ödeme Bildirimi</h3>
 
-      <input placeholder="E-posta adresiniz">
-      <input placeholder="TxID">
+      <input id="email" placeholder="E-posta adresiniz">
+      <input id="txid" placeholder="TxID">
 
-      <select>
-        <option>Gönderim Ağı Seçin</option>
-        <option>Ethereum (ERC20)</option>
-        <option>Base (ERC20)</option>
-        <option>BNB (BEP20)</option>
+      <select id="network">
+        <option value="">Gönderim Ağı Seçin</option>
+        <option value="ETH">Ethereum (ERC20)</option>
+        <option value="BASE">Base (ERC20)</option>
+        <option value="BNB">BNB (BEP20)</option>
       </select>
 
-      <textarea placeholder="Not (isteğe bağlı)"></textarea>
+      <textarea id="note" placeholder="Not (isteğe bağlı)"></textarea>
 
-      <button class="primary full">Ödeme Bildir</button>
+      <button onclick="submitPayment()">Ödeme Bildir</button>
+
+      <div id="result" class="result"></div>
+
+      <a href="/static/index.html" class="back-link">← Ana Sayfaya Dön</a>
     </div>
 
   </section>
 
 </div>
+
+<div id="image-modal">
+  <img id="modal-img">
+</div>
+
+<script>
+  const modal = document.getElementById("image-modal");
+  const modalImg = document.getElementById("modal-img");
+
+  document.querySelectorAll(".zoomable").forEach(img => {
+    img.onclick = () => {
+      modal.classList.add("active");
+      modalImg.src = img.src;
+    };
+  });
+
+  modal.onclick = () => {
+    modal.classList.remove("active");
+    modalImg.src = "";
+  };
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/static/app.js"></script>
 
 </body>
 </html>
