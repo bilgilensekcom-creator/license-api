@@ -18,7 +18,6 @@ DB_PORT = os.getenv("DB_PORT", "5432")
 
 ADMIN_SECRET = os.getenv("ADMIN_SECRET")
 
-
 # =========================
 # DB
 # =========================
@@ -49,7 +48,6 @@ def ensure_table(conn):
             );
             """
         )
-
 
 # =========================
 # HELPERS
@@ -114,25 +112,26 @@ def upsert_license(key: str, days: int):
     conn.close()
     return expires
 
-
 # =========================
 # ADMIN AUTH
 # =========================
 def admin_auth(x_admin_key: str = Header(default=None)):
     if not ADMIN_SECRET:
         raise HTTPException(status_code=500, detail="ADMIN_SECRET missing on server")
+
     if x_admin_key != ADMIN_SECRET:
         raise HTTPException(status_code=403, detail="Forbidden")
 
-
 # =========================
-# API
+# MODELS
 # =========================
 class LicenseCheck(BaseModel):
     license_key: str
     machine_id: str
 
-
+# =========================
+# PUBLIC API
+# =========================
 @app.post("/check")
 def check_license(data: LicenseCheck):
     lic = get_license(data.license_key)
@@ -155,7 +154,9 @@ def check_license(data: LicenseCheck):
         "expires_at": lic["expires_at"].isoformat(),
     }
 
-
+# =========================
+# ADMIN API
+# =========================
 @app.post("/_admin/add-license", dependencies=[Depends(admin_auth)])
 def add_license(key: str, days: int = 30):
     if not key or not key.strip():
@@ -166,3 +167,75 @@ def add_license(key: str, days: int = 30):
 
     expires = upsert_license(key.strip(), days)
     return {"status": "added", "expires_at": expires.isoformat()}
+
+
+@app.get("/_admin/list", dependencies=[Depends(admin_auth)])
+def list_licenses():
+    conn = get_conn()
+    ensure_table(conn)
+
+    with conn.cursor() as cur:
+        cur.execute(
+            "select license_key, machine_id, expires_at from licenses order by expires_at desc"
+        )
+        rows = cur.fetchall()
+
+    conn.close()
+
+    return [
+        {
+            "license_key": r[0],
+            "machine_id": r[1],
+            "expires_at": r[2].isoformat(),
+        }
+        for r in rows
+    ]
+
+
+@app.post("/_admin/delete", dependencies=[Depends(admin_auth)])
+def delete_license(key: str):
+    conn = get_conn()
+    ensure_table(conn)
+
+    with conn.cursor() as cur:
+        cur.execute("delete from licenses where license_key=%s", (key,))
+
+    conn.close()
+    return {"status": "deleted"}
+
+
+@app.post("/_admin/revoke", dependencies=[Depends(admin_auth)])
+def revoke_license(key: str):
+    conn = get_conn()
+    ensure_table(conn)
+
+    with conn.cursor() as cur:
+        cur.execute(
+            "update licenses set expires_at=now() where license_key=%s",
+            (key,),
+        )
+
+    conn.close()
+    return {"status": "revoked"}
+
+
+@app.post("/_admin/extend", dependencies=[Depends(admin_auth)])
+def extend_license(key: str, days: int):
+    if days <= 0:
+        return {"status": "invalid_days"}
+
+    conn = get_conn()
+    ensure_table(conn)
+
+    with conn.cursor() as cur:
+        cur.execute(
+            """
+            update licenses
+            set expires_at = expires_at + interval '%s days'
+            where license_key=%s
+            """,
+            (days, key),
+        )
+
+    conn.close()
+    return {"status": "extended", "days": days}
