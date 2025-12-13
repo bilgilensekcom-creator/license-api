@@ -157,8 +157,8 @@ img {
 }
 
 #image-modal img {
-  max-width: 60%;
-  max-height: 60%;
+  max-width: 30%;
+  max-height: 40%;
   border-radius: 16px;
   box-shadow: 0 0 80px rgba(0, 0, 0, 0.8);
   animation: zoomIn 0.2s ease;
