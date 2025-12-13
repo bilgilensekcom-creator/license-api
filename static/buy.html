@@ -5,6 +5,7 @@
   <title>Satın Al | Discord Akıllı Cevap Botu</title>
   <link rel="stylesheet" href="/static/style.css">
 </head>
+
 <body class="buy-page">
 
 <div class="container">
@@ -15,69 +16,38 @@
     <p>Lisans paketini seç, ödemeni yap ve hemen kullanmaya başla.</p>
   </section>
 
-  <!-- BUY LAYOUT -->
+  <!-- BUY GRID -->
   <section class="buy-layout">
 
-    <!-- LEFT COLUMN -->
+    <!-- LEFT -->
     <div class="buy-left">
-
-      <img
-        src="/static/pricing-banner.png"
-        alt="Lisans Paketleri"
-        class="pricing-banner zoomable"
-      >
+      <img src="/static/pricing-banner.png" class="pricing-banner zoomable">
 
       <p class="pricing-sub">30 Gün · 90 Gün · 365 Gün · Sınırsız</p>
-
-      <h3>💳 Ödeme Bilgileri</h3>
-      <ul class="network-list">
-        <li>Ethereum USDT (ERC20)</li>
-        <li>Base USDT (ERC20)</li>
-        <li>BNB USDT (BEP20)</li>
-      </ul>
-
-      <div class="wallet-box">
-        <span>Cüzdan Adresi</span>
-        <code>0x502430eB5E71428cfFCA997A12D38f625C13C06f</code>
-      </div>
-
-      <p class="muted">
-        Ödeme yaptıktan sonra sağ taraftaki formdan bildiriniz.
-      </p>
-
     </div>
 
-    <!-- RIGHT COLUMN -->
+    <!-- RIGHT -->
     <div class="buy-right">
       <h3>📨 Ödeme Bildirimi</h3>
 
-      <input id="email" placeholder="E-posta adresiniz">
-      <input id="txid" placeholder="TxID">
+      <input placeholder="E-posta adresiniz">
+      <input placeholder="TxID">
 
-      <select id="network">
-        <option value="">Gönderim Ağı Seçin</option>
-        <option value="ETH">Ethereum (ERC20)</option>
-        <option value="BASE">Base (ERC20)</option>
-        <option value="BNB">BNB Chain (BEP20)</option>
+      <select>
+        <option>Gönderim Ağı Seçin</option>
+        <option>Ethereum (ERC20)</option>
+        <option>Base (ERC20)</option>
+        <option>BNB (BEP20)</option>
       </select>
 
-      <textarea id="note" placeholder="Not (isteğe bağlı)"></textarea>
+      <textarea placeholder="Not (isteğe bağlı)"></textarea>
 
-      <button onclick="submitPayment()" class="primary full">
-        Ödeme Bildir
-      </button>
-
-      <p id="result" class="result"></p>
-
-      <a href="/static/index.html" class="back-link">← Ana Sayfaya Dön</a>
+      <button class="primary full">Ödeme Bildir</button>
     </div>
 
   </section>
 
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="/static/app.js"></script>
 
 </body>
 </html>
