@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Satın Al | Discord Akıllı Cevap Botu</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container">
+
+  <h1>💰 Satın Al</h1>
+
+  <h2>📦 Lisans Paketi</h2>
+  <p>
+    Discord Akıllı Cevap Botu<br>
+    <b>Tek Lisans – 30 Gün</b>
+  </p>
+
+  <h3>Fiyat: <b>49 USDT</b></h3>
+
+  <h2>💳 Ödeme</h2>
+  <p>
+    USDT (TRC20) adresi:
+  </p>
+  <b>BURAYA_CÜZDAN_ADRESİN</b>
+
+  <p>
+    Ödeme yaptıktan sonra aşağıdan bildiriniz.
+  </p>
+
+  <h2>📨 Ödeme Bildirimi</h2>
+
+  <input id="email" placeholder="E-posta adresiniz">
+  <input id="txid" placeholder="TxID">
+  <textarea id="note" placeholder="Not (isteğe bağlı)"></textarea>
+
+  <button onclick="submitPayment()">Ödeme Bildir</button>
+
+  <p id="result"></p>
+
+  <br>
+  <a href="/static/index.html">← Ana Sayfaya Dön</a>
+
+</div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
