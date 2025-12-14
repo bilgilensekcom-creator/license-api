@@ -7,22 +7,29 @@ const supabase = window.supabase.createClient(
 );
 
 async function submitPayment() {
-  const email = document.getElementById("email").value;
-  const txid = document.getElementById("txid").value;
-  const note = document.getElementById("note").value;
+  const email = document.getElementById("email").value.trim();
+  const txid = document.getElementById("txid").value.trim();
+  const network = document.getElementById("network").value;
+  const note = document.getElementById("note").value.trim();
 
-  const resultEl = document.getElementById("result");
-
-  if (!email || !txid) {
-    resultEl.innerText = "E-posta ve TxID zorunludur.";
+  if (!email || !txid || !network) {
+    document.getElementById("result").innerText =
+      "E-posta, TxID ve gönderim ağı zorunludur.";
     return;
   }
 
   const { error } = await supabase
     .from("payments")
-    .insert([{ email, txid, note }]);
+    .insert([{
+      email: email,
+      txid: txid,
+      network: network,
+      note: note,
+      status: "pending"
+    }]);
 
-  resultEl.innerText = error
-    ? "Hata: " + error.message
-    : "Ödeme bildirimi alındı ✅";
+  document.getElementById("result").innerText =
+    error
+      ? "Hata: " + error.message
+      : "Ödeme bildirimi alındı ✅";
 }
