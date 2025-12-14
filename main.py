@@ -183,6 +183,25 @@ def add_license(key: str, days: int = 30):
     expires = upsert_license(key.strip(), days)
     return {"status": "added", "expires_at": expires.isoformat()}
 
+@app.post("/_admin/delete", dependencies=[Depends(admin_auth)])
+def delete_license(key: str):
+    conn = get_conn()
+    ensure_table(conn)
+
+    with conn.cursor() as cur:
+        cur.execute(
+            "DELETE FROM licenses WHERE license_key=%s",
+            (key,),
+        )
+
+        if cur.rowcount == 0:
+            conn.close()
+            raise HTTPException(status_code=404, detail="License not found")
+
+    conn.close()
+    return {"status": "deleted", "key": key}
+
+
 
 @app.get("/_admin/list", dependencies=[Depends(admin_auth)])
 def list_licenses():
@@ -205,3 +224,4 @@ def list_licenses():
         }
         for r in rows
     ]
+
