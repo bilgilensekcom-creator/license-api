@@ -120,12 +120,16 @@ def upsert_license(key: str, days: int):
 # =========================
 # ADMIN AUTH
 # =========================
-def admin_auth(x_admin_key: str = Header(None)):
+def admin_auth(x_admin_key: str = Header(None, alias="X-Admin-Key")):
     if not ADMIN_SECRET:
         raise HTTPException(status_code=500, detail="ADMIN_SECRET missing")
 
+    if not x_admin_key:
+        raise HTTPException(status_code=401, detail="Admin key missing")
+
     if x_admin_key != ADMIN_SECRET:
         raise HTTPException(status_code=403, detail="Forbidden")
+
 
 # =========================
 # MODELS
