@@ -14,11 +14,9 @@ app = FastAPI()
 # =========================
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-
 @app.get("/")
 def home():
     return FileResponse("static/index.html")
-
 
 # =========================
 # ENV
@@ -30,7 +28,6 @@ DB_NAME = os.getenv("DB_NAME", "postgres")
 DB_PORT = os.getenv("DB_PORT", "5432")
 
 ADMIN_SECRET = os.getenv("ADMIN_SECRET")
-
 
 # =========================
 # DB
@@ -53,16 +50,13 @@ def get_conn():
 
 def ensure_table(conn):
     with conn.cursor() as cur:
-        cur.execute(
-            """
+        cur.execute("""
             CREATE TABLE IF NOT EXISTS licenses (
-              license_key TEXT PRIMARY KEY,
-              machine_id TEXT,
-              expires_at TIMESTAMPTZ NOT NULL
+                license_key TEXT PRIMARY KEY,
+                machine_id TEXT,
+                expires_at TIMESTAMPTZ NOT NULL
             );
-            """
-        )
-
+        """)
 
 # =========================
 # HELPERS
@@ -113,30 +107,25 @@ def upsert_license(key: str, days: int):
     expires = utcnow() + timedelta(days=days)
 
     with conn.cursor() as cur:
-        cur.execute(
-            """
+        cur.execute("""
             INSERT INTO licenses (license_key, machine_id, expires_at)
             VALUES (%s, NULL, %s)
             ON CONFLICT (license_key)
             DO UPDATE SET machine_id=NULL, expires_at=EXCLUDED.expires_at
-            """,
-            (key, expires),
-        )
+        """, (key, expires))
 
     conn.close()
     return expires
 
-
 # =========================
 # ADMIN AUTH
 # =========================
-def admin_auth(x_admin_key: str = Header(default=None)):
+def admin_auth(x_admin_key: str = Header(None)):
     if not ADMIN_SECRET:
         raise HTTPException(status_code=500, detail="ADMIN_SECRET missing")
 
     if x_admin_key != ADMIN_SECRET:
         raise HTTPException(status_code=403, detail="Forbidden")
-
 
 # =========================
 # MODELS
@@ -144,7 +133,6 @@ def admin_auth(x_admin_key: str = Header(default=None)):
 class LicenseCheck(BaseModel):
     license_key: str
     machine_id: str
-
 
 # =========================
 # PUBLIC API
@@ -168,20 +156,21 @@ def check_license(data: LicenseCheck):
 
     return {"status": "ok", "expires_at": lic["expires_at"].isoformat()}
 
-
 # =========================
 # ADMIN API
 # =========================
+
 @app.post("/_admin/add-license", dependencies=[Depends(admin_auth)])
 def add_license(key: str, days: int = 30):
     if not key or not key.strip():
-        return {"status": "invalid_key"}
+        raise HTTPException(status_code=400, detail="Invalid key")
 
     if days <= 0:
-        return {"status": "invalid_days"}
+        raise HTTPException(status_code=400, detail="Invalid days")
 
     expires = upsert_license(key.strip(), days)
     return {"status": "added", "expires_at": expires.isoformat()}
+
 
 @app.post("/_admin/delete", dependencies=[Depends(admin_auth)])
 def delete_license(key: str):
@@ -201,6 +190,46 @@ def delete_license(key: str):
     conn.close()
     return {"status": "deleted", "key": key}
 
+
+@app.post("/_admin/revoke", dependencies=[Depends(admin_auth)])
+def revoke_license(key: str):
+    conn = get_conn()
+    ensure_table(conn)
+
+    with conn.cursor() as cur:
+        cur.execute(
+            "UPDATE licenses SET machine_id=NULL WHERE license_key=%s",
+            (key,),
+        )
+
+        if cur.rowcount == 0:
+            conn.close()
+            raise HTTPException(status_code=404, detail="License not found")
+
+    conn.close()
+    return {"status": "revoked", "key": key}
+
+
+@app.post("/_admin/extend", dependencies=[Depends(admin_auth)])
+def extend_license(key: str, days: int):
+    if days <= 0:
+        raise HTTPException(status_code=400, detail="Invalid days")
+
+    conn = get_conn()
+    ensure_table(conn)
+
+    with conn.cursor() as cur:
+        cur.execute(
+            "UPDATE licenses SET expires_at = expires_at + interval '%s days' WHERE license_key=%s",
+            (days, key),
+        )
+
+        if cur.rowcount == 0:
+            conn.close()
+            raise HTTPException(status_code=404, detail="License not found")
+
+    conn.close()
+    return {"status": "extended", "key": key, "days": days}
 
 
 @app.get("/_admin/list", dependencies=[Depends(admin_auth)])
@@ -224,4 +253,3 @@ def list_licenses():
         }
         for r in rows
     ]
-
